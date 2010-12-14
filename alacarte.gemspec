@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "alacarte"
   s.version     = Alacarte::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.authors     = ["Stijn Mathysen"]
+  s.email       = ["stijn@skylight.be"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Provides a generic menu system for Rails}
+  s.description = %q{This Rails plugin allows you to create a menu system, using a dsl (similar to routes).}
 
   s.rubyforge_project = "alacarte"
 
