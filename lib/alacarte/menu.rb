@@ -5,17 +5,20 @@ module Alacarte
     VALID_ELEMENTS = [:link, :span]
     
     cattr_reader :env
-    attr_reader :type, :name, :path, :as, :label, :options, :items, :block, :html_options
+    attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :block, :html_options, :group_options
     
-    def initialize(type, *args, &block)
+    def initialize(parent, type, *args, &block)
       @options = args.extract_options!.dup
+      @parent = parent
       @type = type
       @name = options[:name] || args[0]
       @path = options[:path] || args[1]
-      @label = options[:label] || I18n.t("alacarte.menus.#{@name.to_s}", :default => @name.to_s)
+      @deep_name = @parent ? "#{@parent.deep_name}.#{@name.to_s}" : @name.to_s
+      @label = options[:label] || I18n.t("alacarte.menus.#{@deep_name}", :default => @deep_name.to_s)
       @as = options[:as] || @name
       @block = block if block_given?
       @html_options = options[:html]
+      @group_options = options[:group]
 
       build
     end
@@ -47,11 +50,11 @@ module Alacarte
       return true
     end
     
-    def method_missing(id, *args)
+    def method_missing(id, *args, &block)
       if Menu.env? && Menu.env.respond_to?(id)
-        @@env.send(id, *args)
+        @@env.send(id, *args, &block)
       elsif VALID_ELEMENTS.member?(id)
-        @items << Menu.new(id, *args)
+        @items << Menu.new(self, id, *args, &block)
       else
         super
       end
