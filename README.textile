@@ -1,0 +1,104 @@
+h1. Alacarte
+
+Alacarte allows you to setup menu's and conditions in your Rails app in a router-like DSL way.
+
+You can easily;
+
+* group menu's by name
+* set conditions on menu items as a group
+* set conditions on menu items with @:if@ and @:unless@
+* nest your menu's
+
+h2. Installation
+
+Alacarte is being developed against Rails 3.0.3. No other versions have been tested.
+
+To install, add Alacarte to your @Gemfile@ and run `bundle install`:
+
+<pre>
+gem 'alacarte'
+</pre>
+
+After alacarte is installed, you will need to setup a rails initialiser to define your menu.
+
+h3. Initialiser
+
+Add an initialiser file to your rails application; e.g. @config/initialisers/alacarte.rb@ and add the menus in that file using the draw method.
+
+<pre>
+YourApplication::Application.menus.draw do
+    menu :main do
+        # menu information goes here...
+    end
+end
+</pre>
+
+h2. How it works
+
+h3. Helper environment
+
+Alacarte is linked to your helper environment, therefor you can call any helper method that is available to your rails app within your menu definition file;
+
+* format helpers
+* url_for, generated paths based on your routes file, ...
+* I18n
+* authentication related calls (e.g. current_user for Devise or Authlogic)
+
+h3. options
+
+You can pass in options to any level of your menu, including the top level. Here are some examples of options;
+
+* @type@ specify what type it is, currently @menu@, @link@ and @span@ are supported
+* @name@ allows you to specify the name of the menu item, a @deep_name@ is derived, based on the parents of that item.
+* @path@ allows you to set the path of that link
+* @label@ sets the label of the menu. By default Alacarte tries to translate the @deep_name@ (with an alacarte.menus namespace)
+* @html@ are options passed in as html options to the given element (e.g. class or id attributes)
+* @group@ are options passed in as html options, when the current element apears to be a group of other elements
+* @if@ allows you to pass in a proc to test if the menu item is valid
+* @unless@ allows you to pass in a proc to test if the menu item is valid, but tests for a false
+
+h3. Menu example
+
+<pre>
+YourApplication::Application.menus.draw do
+
+    menu :language do
+        link :nl, root_path(:locale => :nl), :html => { :class => 'nl' }
+        link :fr, root_path(:locale => :fr), :html => { :class => 'fr' }
+    end
+
+    menu :main, :group => { :class => 'main' } do
+       link :home, root_path
+       link :recent, 
+       link :other_site, 'http://someurl.com'
+       # ...
+       
+       link :my_account, account_path(:current), :if => { current_user }
+       
+    end
+    
+end
+</pre>
+
+h3. Render the menu
+
+Render the menu where you like in your view and pass an optional "current element" selector (in this case the current locale);
+
+<pre>
+...
+    <div id="language_selection">
+        <%= navigation_for(:language, I18n.locale) %>
+    </div>
+...
+</pre>
+
+h3. Output example
+
+The output is generated as a ul-li list with anchor elements. If there is an element that can be matched, it will get a class active;
+
+<pre>
+<ul>
+    <li><a href="/" class="nl active">nl</a></li>
+    <li><a href="/" class="nl">fr</a></li>
+</ul>
+</pre>
