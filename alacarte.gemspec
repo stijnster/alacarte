@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Stijn Mathysen"]
   s.email       = ["stijn@skylight.be"]
-  s.homepage    = ""
+  s.homepage    = "http://github.com/stijnster/alacarte"
   s.summary     = %q{Provides a generic menu system for Rails}
   s.description = %q{This Rails plugin allows you to create a menu system, using a dsl (similar to routes).}
 
