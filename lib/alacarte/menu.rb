@@ -3,11 +3,12 @@ module Alacarte
   class Menu
     
     VALID_ELEMENTS = [:link, :span]
+    @@env = false
     
     attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :block, :html_options, :group_options
     
     def initialize(parent, type, *args, &block)
-      @options = args.extract_options!.dup
+      @options = args.last.is_a?(::Hash) ? args.pop : {}
       @parent = parent
       @type = type
       @name = options[:name] || args[0]
@@ -31,7 +32,7 @@ module Alacarte
     end
     
     def self.env
-      !!@@env
+      @@env
     end
     
     def build(env = nil)
