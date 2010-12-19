@@ -4,7 +4,6 @@ module Alacarte
     
     VALID_ELEMENTS = [:link, :span]
     
-    cattr_reader :env
     attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :block, :html_options, :group_options
     
     def initialize(parent, type, *args, &block)
@@ -28,6 +27,10 @@ module Alacarte
     end
     
     def self.env?
+      !!@@env
+    end
+    
+    def self.env
       !!@@env
     end
     
