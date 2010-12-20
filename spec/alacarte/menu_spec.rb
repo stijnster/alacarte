@@ -51,6 +51,48 @@ describe Alacarte::Menu do
       @menu.as.should eql 'login_button'
     end
     
+    it "should send the env property when the menu is built" do
+      @menu = Alacarte::Menu.new(nil, :menu, :as => 'account')
+      Alacarte::Menu.env?.should be_false
+      Alacarte::Menu.env.should be_nil
+      
+      @menu.build
+      Alacarte::Menu.env?.should be_false
+      Alacarte::Menu.env.should be_nil
+
+      @object = Object.new
+      @menu.build(@object)
+      Alacarte::Menu.env?.should be_true
+      Alacarte::Menu.env.should eql @object    
+    end
+    
+    it "should be able to test if a block was set on the menu" do
+      @menu = Alacarte::Menu.new(nil, :menu, :as => 'account') do
+        link :login, '/login'
+        link :logout, '/logout'
+      end
+      @menu.block?.should be_true
+      
+      @menu = Alacarte::Menu.new(nil, :menu, :as => 'account')
+      @menu.block?.should be_false
+    end
+    
+    it "should return the correct valid state for if statements" do
+      @menu = Alacarte::Menu.new(nil, :menu, :if => lambda{ 4 == 3 })
+      @menu.valid?.should be_false
+
+      @menu = Alacarte::Menu.new(nil, :menu, :if => lambda{ 4 == 4 })
+      @menu.valid?.should be_true
+    end
+    
+    it "should return the correct valid state for unless statements" do
+      @menu = Alacarte::Menu.new(nil, :menu, :unless => lambda{ 4 == 3 })
+      @menu.valid?.should be_true
+
+      @menu = Alacarte::Menu.new(nil, :menu, :unless => lambda{ 4 == 4 })
+      @menu.valid?.should be_false
+    end    
+    
   end
   
 end

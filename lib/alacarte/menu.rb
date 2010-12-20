@@ -3,7 +3,7 @@ module Alacarte
   class Menu
     
     VALID_ELEMENTS = [:link, :span]
-    @@env = false
+    @@env = nil
     
     attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :block, :html_options, :group_options
     
