@@ -18,6 +18,11 @@ module Alacarte
       @@env
     end
     
+    # Resets the env, used in rspec testing
+    def self.reset_env!
+      @@env = nil
+    end
+    
     # Creates a menu item. Menu items can relate to a +parent+ menu item and a type should be passed. The type can be used for
     # rendering (current types are +:menu+, +:link+ and +:span+).
     #

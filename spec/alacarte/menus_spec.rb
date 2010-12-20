@@ -15,8 +15,8 @@ describe Alacarte::Menus do
     end
     
     @menus.size.should eql 2
-    @menus.keys.first.should eql :one
-    @menus.keys.last.should eql :two
+    @menus.keys.should include(:one)
+    @menus.keys.should include(:two)
 
     @menus.values.each do |menu|
       menu.should be_instance_of Alacarte::Menu
@@ -31,6 +31,7 @@ describe Alacarte::Menus do
   end
   
   it "should construct menu items when the build command is issued" do
+    Alacarte::Menu.env?.should be_false
     @menus.size.should eql 0
     @menus.draw do
       menu :account do
