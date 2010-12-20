@@ -30,4 +30,25 @@ describe Alacarte::Menus do
     @menus.keys.first.should eql :three
   end
   
+  it "should construct menu items when the build command is issued" do
+    @menus.size.should eql 0
+    @menus.draw do
+      menu :account do
+        link :account, '/account' do
+          link :avatar, '/account/avatar'
+          link :edit, '/account/edit'
+        end
+        link :login, '/login'
+        link :logout, '/logout'
+      end
+    end
+    
+    @menus.size.should eql 1
+    @menus[:account].items.size.should eql 0
+    
+    @menus[:account].build(Object.new)
+    @menus[:account].items.size.should eql 3
+    @menus[:account].items.first.items.size.should eql 2
+  end
+  
 end

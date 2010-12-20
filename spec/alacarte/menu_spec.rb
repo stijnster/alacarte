@@ -42,6 +42,15 @@ describe Alacarte::Menu do
       @menu.label.should eql 'Log in here!'
     end
     
+    it "should be possible to specify an 'as'" do
+      @menu = Alacarte::Menu.new(nil, :span, :as => 'spacestation')
+      @menu.as.should eql 'spacestation'
+            
+      @menu = Alacarte::Menu.new(nil, :link, 'login', :as => 'login_button')
+      @menu.name.should eql 'login'
+      @menu.as.should eql 'login_button'
+    end
+    
   end
   
 end
