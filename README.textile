@@ -37,7 +37,7 @@ h2. How it works
 
 h3. Helper environment
 
-Alacarte is linked to your helper environment, therefor you can call any helper method that is available to your rails app within your menu definition file;
+Alacarte is linked to your helper environment, therefore you can call any helper method that is available to your rails app within your menu definition file;
 
 * format helpers
 * url_for, generated paths based on your routes file, ...
