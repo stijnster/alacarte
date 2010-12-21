@@ -1,5 +1,8 @@
 = Change Log
 
+* Type fix in README "Output example"
+* Typo fix by i76; https://github.com/i76/alacarte/commit/f8c36b04ea6ca88385a0af271476731620f645aa
+
 == Version 0.0.2
 
 * Removed some Rails specific routines and replaced them with custom routines
