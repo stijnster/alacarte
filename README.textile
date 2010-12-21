@@ -1,13 +1,13 @@
 h1. Alacarte
 
-Alacarte allows you to setup menu's and conditions in your Rails app in a router-like DSL way.
+Alacarte allows you to setup menus and conditions in your Rails app in a router-like DSL way.
 
 You can easily;
 
-* group menu's by name
+* group menus by name
 * set conditions on menu items as a group
 * set conditions on menu items with @:if@ and @:unless@
-* nest your menu's
+* nest your menus
 
 h2. Installation
 
