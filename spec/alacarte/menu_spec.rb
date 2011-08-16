@@ -109,5 +109,26 @@ describe Alacarte::Menu do
     @menu = Alacarte::Menu.new(nil, :menu, :unless => lambda{ 4 == 4 })
     @menu.valid?.should be_false
   end    
+  
+  it "should add .root to the translation key of a root link or span element" do
+    @menu = Alacarte::Menu.new(nil, :menu, 'name') do
+      link :global, '/global'
+      link :account, '/account' do
+        link :settings, '/settings'
+        link :logout, '/logout'
+      end
+    end
     
+    @object = Object.new
+    
+    @menu.build(@object)
+    @menu.deep_name.should eql 'name'
+    @menu.items.first.deep_name.should eql 'name.global'
+    @menu.items.last.deep_name.should eql 'name.account'
+    @menu.items.last.translation_key.should eql 'name.account.root'
+    @menu.items.last.items.first.deep_name.should eql 'name.account.settings'
+    @menu.items.last.items.first.translation_key.should eql 'name.account.settings'
+    @menu.items.last.items.last.deep_name.should eql 'name.account.logout'
+    @menu.items.last.items.last.translation_key.should eql 'name.account.logout'
+  end
 end

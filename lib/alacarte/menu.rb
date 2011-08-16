@@ -6,7 +6,7 @@ module Alacarte
     VALID_ELEMENTS = [:link, :span]
     @@env = nil
     
-    attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :block, :html_options, :group_options
+    attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :block, :html_options, :group_options, :translation_key
     
     # Tests if an environment was set to the Alacarte::Menu
     def self.env?
@@ -45,7 +45,8 @@ module Alacarte
       @name = options[:name] || args[0]
       @path = options[:path] || args[1]
       @deep_name = @parent ? "#{@parent.deep_name}.#{@name.to_s}" : @name.to_s
-      @label = options[:label] || I18n.t("alacarte.menus.#{@deep_name}", :default => @deep_name.to_s)
+      @translation_key = (block_given? && @type != :menu) ? "#{deep_name}.root" : "#{deep_name}"
+      @label = options[:label] || I18n.t("alacarte.menus.#{@translation_key}", :default => @translation_key.to_s)
       @as = options[:as] || @name
       @block = block if block_given?
       @html_options = options[:html]
