@@ -73,7 +73,7 @@ YourApplication::Application.menus.draw do
        link :other_site, 'http://someurl.com'
        # ...
        
-       link :my_account, account_path(:current), :if => { current_user }
+       link :my_account, account_path(:current), :if => lambda{ current_user }
        
     end
     
