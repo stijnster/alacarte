@@ -27,7 +27,7 @@ module AlacarteHelper
           _item << elements_for(item, current_element)
         end
       
-        result << content_tag(:li, _item)
+        result << content_tag(:li, _item, item.wrapper_options)
       end
     end
     

@@ -1,5 +1,14 @@
 = Change Log
 
+== Version 0.0.5
+
+* Adding :wrapper html options to allow customization of the li-element.
+
+== Version 0.0.4
+
+* Improved documentation for the usage of :if and :unless
+* Added .root to the root element of a menu item with child items, so it can be addressed uniquely with I18n
+
 == Version 0.0.3
 
 * Typo fix in README "Output example"

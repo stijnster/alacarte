@@ -6,7 +6,7 @@ module Alacarte
     VALID_ELEMENTS = [:link, :span]
     @@env = nil
     
-    attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :block, :html_options, :group_options, :translation_key
+    attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :block, :html_options, :group_options, :wrapper_options, :translation_key
     
     # Tests if an environment was set to the Alacarte::Menu
     def self.env?
@@ -38,6 +38,7 @@ module Alacarte
     # * +:unless+ set an inverse conditions when the menu item should be valid
     # * +:html+ pass any html options that you want to be added to the menu item
     # * +:group+ when the menu item has valid children, the +group+ options are passed as the html options of the grouping element
+    # * +:wrapper+ pass any html options that you want to add to the wrapping li item
     def initialize(parent, type, *args, &block)
       @options = args.last.is_a?(::Hash) ? args.pop : {}
       @parent = parent
@@ -51,6 +52,7 @@ module Alacarte
       @block = block if block_given?
       @html_options = options[:html]
       @group_options = options[:group]
+      @wrapper_options = options[:wrapper]
 
       build
     end
