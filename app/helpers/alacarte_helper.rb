@@ -19,8 +19,10 @@ module AlacarteHelper
         _html_options[:class] = _html_options[:class].to_s.insert(0, 'active ').strip if (current_element == item.as)
       
         _item = case item.type
-          when :link: link_to(item.label.html_safe, item.path, _html_options)
-          else content_tag(item.type, item.label, _html_options)
+          when :link
+            link_to(item.label.html_safe, item.path, _html_options)
+          else
+            content_tag(item.type, item.label, _html_options)
         end
         
         if item.items.size > 0
