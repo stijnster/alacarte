@@ -9,7 +9,11 @@ module Alacarte
 
     # Define a menu in a draw block
     def menu(name, *args, &block)
-      self[name] = Menu.new(nil, :menu, name, *args, &block)
+      if self[name]
+        self[name].extend(&block)
+      else
+        self[name] = Menu.new(nil, :menu, name, *args, &block)
+      end
     end
 
   end

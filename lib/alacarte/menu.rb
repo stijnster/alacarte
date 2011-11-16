@@ -3,10 +3,10 @@ module Alacarte
   # Alacarte::Menu is the base class for defining menu items.
   class Menu
     
-    VALID_ELEMENTS = [:link, :span]
+    VALID_ELEMENTS = [:link, :span, :separator, :title, :subtitle, :line]
     @@env = nil
     
-    attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :block, :html_options, :group_options, :wrapper_options, :translation_key
+    attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :blocks, :html_options, :group_options, :wrapper_options, :translation_key
     
     # Tests if an environment was set to the Alacarte::Menu
     def self.env?
@@ -49,7 +49,8 @@ module Alacarte
       @translation_key = (block_given? && @type != :menu) ? "#{deep_name}.root" : "#{deep_name}"
       @label = options[:label] || I18n.t("alacarte.menus.#{@translation_key}", :default => @translation_key.to_s)
       @as = options[:as] || @name
-      @block = block if block_given?
+      @blocks = []
+      @blocks << block if block_given?
       @html_options = options[:html]
       @group_options = options[:group]
       @wrapper_options = options[:wrapper]
@@ -57,9 +58,13 @@ module Alacarte
       build
     end
     
+    def extend(&block)
+      @blocks << block if block_given?
+    end
+    
     # Tests if a block was passed to the Alacarte::Menu object
     def block?
-      !!@block
+      (@blocks.size > 0)
     end
     
     # Builds the menu, based on the environment that is passed.
@@ -67,7 +72,11 @@ module Alacarte
       @@env = env if env
       @items = []
 
-      self.instance_eval(&@block) if Menu.env? && self.block?
+      if Menu.env? && self.block?
+        @blocks.each do |block|
+          self.instance_eval(&block)
+        end
+      end
     end
     
     # Tests to see if the current menu item is valid in the current setting
