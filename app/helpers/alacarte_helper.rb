@@ -20,7 +20,8 @@ module AlacarteHelper
       
         _item = case item.type
           when :link
-            link_to(item.label.html_safe, item.path, _html_options)
+            _path = item.path.respond_to?(:call) ? item.path.call : item.path
+            link_to(item.label.html_safe, _path, _html_options)
           else
             content_tag(item.type, item.label, _html_options)
         end
