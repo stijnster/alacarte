@@ -73,7 +73,8 @@ YourApplication::Application.menus.draw do
        link :other_site, 'http://someurl.com'
        # ...
        
-       link :my_account, account_path(:current), :if => lambda{ current_user }
+       # add menu items with runtime methods for path generation
+       link :my_account, lambda { account_path(current_user) }, :if => lambda{ current_user }
        
     end
     
