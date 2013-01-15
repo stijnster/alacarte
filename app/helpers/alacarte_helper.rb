@@ -22,6 +22,8 @@ module AlacarteHelper
           when :link
             _path = item.path.respond_to?(:call) ? item.path.call : item.path
             link_to(item.label.html_safe, _path, _html_options)
+          when :text
+            item.label.html_safe
           else
             content_tag(item.type, item.label, _html_options)
         end

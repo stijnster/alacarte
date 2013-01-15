@@ -3,7 +3,7 @@ module Alacarte
   # Alacarte::Menu is the base class for defining menu items.
   class Menu
     
-    VALID_ELEMENTS = [:link, :span, :separator, :title, :subtitle, :line]
+    VALID_ELEMENTS = [:link, :span, :separator, :title, :subtitle, :line, :text]
     @@env = nil
     
     attr_reader :parent, :type, :name, :deep_name, :path, :as, :label, :options, :items, :blocks, :html_options, :group_options, :wrapper_options, :translation_key

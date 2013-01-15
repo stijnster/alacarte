@@ -1,5 +1,18 @@
 = Change Log
 
+== Version 0.0.9
+
+* You can now specify a :text element that will render direct text into the li, you are still able to set the wrapper options
+
+== Version 0.0.8
+
+* forgot to mention Thomas Boerger in the 0.0.7 release. Thanks man!
+
+== Version 0.0.7
+
+* Thanks to Thomas Boerger, you can now pass in procs as links, allowing dynamic url generation
+* Allowed additional tags like :separator, :title, :subtitle, :line, so custom generators have more flexibility
+
 == Version 0.0.6
 
 * Thanks to Thomas Boerger, for making the code compatible with ruby 1.9.2
